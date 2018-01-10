@@ -61,7 +61,10 @@ function make_files_list(files_list){
   files_list.forEach((i)=>{
     console.log('item')
     console.log(i)
-    var link = '<li><a href="">'+i+'</a></li>'
+    //TODO SCOTT
+    // add a class to the link? and edit the css.css file for that class
+
+    var link = '<li><a href="/katiesdl/getem?song='+i+'">'+i+'</a></li>'
     music_library_list.innerHTML += link
   })
 }

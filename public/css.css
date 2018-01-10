@@ -1,0 +1,13 @@
+#loader{
+  display: none;
+  position: absolute;
+  top: 20px;
+  right: 30px;
+}
+
+#servermsg{
+  font-size: 2em;
+ position: absolute;
+ top: 135px;
+ right: 150px; 
+}

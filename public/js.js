@@ -33,6 +33,11 @@ gobtn.addEventListener('click', function(){
 
 })
 
+socket.on('files_data', (data)=>{
+  console.log(data)
+  make_files_list(data)
+})
+
 socket.on('done', (name)=>{
   loader.style.display='none'
   var link = '<a id="dl_link" href="/katiesdl/getem?song='+name+'">'+name+'</a>'
@@ -49,6 +54,17 @@ socket.on('percent', (percentage)=>{
   clearTimeout(timeout_interval)
 })
 
+
+function make_files_list(files_list){
+  var music_library_list = document.getElementById('music_library_list')
+
+  files_list.forEach((i)=>{
+    console.log('item')
+    console.log(i)
+    var link = '<li><a href="">'+i+'</a></li>'
+    music_library_list.innerHTML += link
+  })
+}
 
 
 function get(name){

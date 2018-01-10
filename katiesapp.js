@@ -37,6 +37,17 @@ app.get('/', function(req, res){
 
 io.on('connection', (socket)=>{
   console.log('socket connection')
+  //get the files list
+  fs.readdir(__dirname+'/public/downloads',(err, files)=>{
+    if(err){
+      console.log(err)
+    }else{
+      console.log(files)
+      socket.emit('files_data', files)
+    }
+  })
+
+  
 
   socket.on('getsong', (song)=>{
     console.log('getsong socket event '+song)
@@ -64,16 +75,17 @@ io.on('connection', (socket)=>{
           // console.log('3 '+stdout[3])
         }else if(stdout.startsWith('[ffmpeg]')){
           stdout = stdout.split('/')
-          console.log('0 '+stdout[0])
-          console.log('1 '+stdout[1])
-          console.log('2 '+stdout[2])
-          console.log('3 '+stdout[3])
-          console.log('4 '+stdout[4])
-          console.log('5 '+stdout[5])
-          console.log('6 '+stdout[6])
-          console.log('7 '+stdout[7])
-          console.log('8 '+stdout[8])
-          song_name = stdout[7]
+          // console.log('0 '+stdout[0])
+          // console.log('1 '+stdout[1])
+          // console.log('2 '+stdout[2])
+          // console.log('3 '+stdout[3])
+          // console.log('4 '+stdout[4])
+          // console.log('5 '+stdout[5])
+          // console.log('6 '+stdout[6])
+          // console.log('7 '+stdout[7])
+          // console.log('8 '+stdout[8])
+          song_name = stdout[6]
+          // song_name = stdout[7]
         }else if(stdout.startsWith('Deleting original')){
           console.log('we done')
 

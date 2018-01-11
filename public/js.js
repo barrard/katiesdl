@@ -45,9 +45,12 @@ socket.on('done', (name)=>{
   var link = '<li><a class="new_link" href="/katiesdl/getem?song='+name+'">'+name+'</a></li>'
 
   music_library_list.innerHTML+= link
-  setTimeout(function(){
-    document.querySelector('a[href="/katiesdl/getem?song='+name+'"]').click()
-  }, 2000)
+  if(auto_downlaod_check_box.checked){
+    setTimeout(function(){
+      document.querySelector('a[href="/katiesdl/getem?song='+name+'"]').click()
+    }, 1000)
+  }
+
 
 
 })

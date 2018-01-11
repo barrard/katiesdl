@@ -4,7 +4,7 @@ var HOSTNAME = location.hostname
 var PROTOCOL = location.protocol
 var PORT = location.port
  // var socket = io(PROTOCOL+'//'+HOST);
- var socket = io(PROTOCOL+'//'+HOST, {path:'/katiesdl/socket.io'});
+ var socket = io(PROTOCOL+'//'+HOST, {path:'/katiesdl/socket.io', 'sync disconnect on unload': true});
 
 
 var ytlink = document.getElementById('ytlink')
@@ -33,6 +33,8 @@ gobtn.addEventListener('click', function(){
 
 })
 
+
+
 socket.on('files_data', (data)=>{
   console.log(data)
   make_files_list(data)
@@ -40,24 +42,34 @@ socket.on('files_data', (data)=>{
 
 socket.on('done', (name)=>{
   loader.style.display='none'
-  var link = '<a id="dl_link" href="/katiesdl/getem?song='+name+'">'+name+'</a>'
+  var link = '<a class="no-display" id="dl_link" href="/katiesdl/getem?song='+name+'">'+name+'</a>'
   servermsg.innerHTML = link
   setTimeout(function(){
-    document.getElementById('dl_link').click()
+    // document.getElementById('dl_link').click()
   }, 2000)
 
 
 })
 
-socket.on('percent', (percentage)=>{
-  servermsg.innerText = percentage
+socket.on('download_data', (download_data)=>{
+  servermsg.innerText = 'downloading: '+download_data.percent+' of '+download_data.total_size
+
   clearTimeout(timeout_interval)
+})
+
+socket.on('conversion_data', (conversion_data)=>{
+  servermsg.innerText = 'converting to mp3: '+conversion_data.ffmpeg_size+' of '+conversion_data.total_size
+
+})
+
+socket.on('connection', ()=>{
+  console.log('connection')  
 })
 
 
 function make_files_list(files_list){
   var music_library_list = document.getElementById('music_library_list')
-
+  music_library_list.innerHTML = '';
   files_list.forEach((i)=>{
     console.log('item')
     console.log(i)
@@ -91,4 +103,12 @@ function get(name){
     // this.style.display = 'none';
     request.send();
   // });
+}
+
+
+
+window.onbeforeunload = function(e){
+  console.log('onbefore unload')
+  console.log(socket.id)
+  socket.emit('discon')
 }

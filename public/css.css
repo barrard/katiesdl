@@ -9,5 +9,9 @@
   font-size: 2em;
  position: absolute;
  top: 135px;
- right: 150px; 
+ right: 15px; 
+}
+
+.no-display{
+  display: none;
 }

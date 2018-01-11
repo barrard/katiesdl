@@ -7,11 +7,29 @@
 
 #servermsg{
   font-size: 2em;
- position: absolute;
  top: 135px;
  right: 15px; 
 }
 
 .no-display{
   display: none;
+}
+
+.new_link{
+  color:tomato;
+  font-size: 2em;
+}
+
+#ytlink{
+  padding: 10px;
+  font-size: 1.3em;
+  margin: 10px;
+  width: 100%;
+}
+
+#gobtn{
+  background: lawngreen;
+  font-size: 1.3em;
+  width: 25%;
+
 }

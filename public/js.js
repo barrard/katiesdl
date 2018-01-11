@@ -11,12 +11,10 @@ var ytlink = document.getElementById('ytlink')
 var gobtn = document.getElementById('gobtn')
 var loader = document.getElementById('loader')
 var servermsg = document.getElementById('servermsg')
-var timeout_interval;
-var test = document.getElementById('test')
+var music_library_list = document.getElementById('music_library_list')
+var auto_downlaod_check_box = document.querySelector('input[name="auto_download"]')
 
-test.addEventListener('click', function(){
-  get('test')
-})
+var timeout_interval;
 
 gobtn.addEventListener('click', function(){
   console.log(ytlink.value)
@@ -42,10 +40,13 @@ socket.on('files_data', (data)=>{
 
 socket.on('done', (name)=>{
   loader.style.display='none'
-  var link = '<a class="no-display" id="dl_link" href="/katiesdl/getem?song='+name+'">'+name+'</a>'
-  servermsg.innerHTML = link
+  // var link = '<a class="no-display" id="dl_link" href="/katiesdl/getem?song='+name+'">'+name+'</a>'
+  servermsg.innerHTML = 'done with '+name
+  var link = '<li><a class="new_link" href="/katiesdl/getem?song='+name+'">'+name+'</a></li>'
+
+  music_library_list.innerHTML+= link
   setTimeout(function(){
-    // document.getElementById('dl_link').click()
+    document.querySelector('a[href="/katiesdl/getem?song='+name+'"]').click()
   }, 2000)
 
 
@@ -68,7 +69,6 @@ socket.on('connection', ()=>{
 
 
 function make_files_list(files_list){
-  var music_library_list = document.getElementById('music_library_list')
   music_library_list.innerHTML = '';
   files_list.forEach((i)=>{
     console.log('item')

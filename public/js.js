@@ -27,7 +27,7 @@ gobtn.addEventListener('click', function(){
     loader.style.display='none'
     servermsg.innerText = 'Sorry didnt find it'
 
-  }, 20500)
+  }, 35000)
 
 })
 

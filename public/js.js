@@ -13,12 +13,15 @@ var loader = document.getElementById('loader')
 var servermsg = document.getElementById('servermsg')
 var music_library_list = document.getElementById('music_library_list')
 var auto_downlaod_check_box = document.querySelector('input[name="auto_download"]')
+var convert_mp3_check_box = document.querySelector('input[name="convert_mp3"]')
 
 var timeout_interval;
 
 gobtn.addEventListener('click', function(){
   console.log(ytlink.value)
-  var song = ytlink.value
+  var song = {}
+  song.link =  ytlink.value
+  song.convert= convert_mp3_check_box.checked
   servermsg.innerText = ''
   // get(ytlink.value)
   socket.emit('getsong', song)

@@ -57,9 +57,9 @@ io.on('connection', (socket)=>{
 
   socket.on('getsong', (song)=>{
     if(!song)return
-    console.log('getsong socket event '+song)
-    var song_name;
-    var download_data;
+    console.log('getsong socket event '+song.link)
+    var convert_mp3 = song.convert;
+    song = song.link
     if(song.indexOf('\'') !== -1 || song.indexOf(';') !== -1){
       console.log('bad')
     }else{
@@ -118,7 +118,9 @@ io.on('connection', (socket)=>{
           song_name = stdout[7]
         }else if(stdout.startsWith('Deleting original')){
           console.log('we done')
-          run_ffmpeg(song_name, socket, download_data.total_size)
+          if (convert_mp3) {
+            run_ffmpeg(song_name, socket, download_data.total_size)            
+          }
 
           // var youtubedl = exec('youtube-dl -v '+song)
           // youtubedl.stdout.on('data', (d)=>{
